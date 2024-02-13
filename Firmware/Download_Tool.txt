@@ -1,2 +1,2 @@
-请到乐鑫官网下载 flash_download_tool_v3.8.5
-https://www.espressif.com/zh-hans/support/download/other-tools
+1 Please go to Espressif’s official website to download flash_download_tool_v3.8.5
+https://www.espressif.com/en/support/download/other-tools

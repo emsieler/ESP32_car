@@ -1,5 +1,12 @@
 # ESP32-Mini Reconnaissance Car
 
+YouTube Video Tutorials:
+https://www.youtube.com/watch?v=XCp0qFipG2o
+https://www.youtube.com/watch?v=HfQ7lhhgDOk
+
+Espressif Download
+https://www.espressif.com/en/support/download/other-tools
+
 #### 软件架构
 软件架构说明
 
