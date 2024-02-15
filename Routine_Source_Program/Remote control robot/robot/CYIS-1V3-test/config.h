@@ -29,10 +29,10 @@ BILIBILI:技术宅物语
 #define Servo_Pin 5 //舵机
 
 #define Headlamp_Pin 4 //照明灯
-#define MotorR_A_Pin 18 //马达驱动 Motor drive
-#define MotorR_B_Pin 23 //马达驱动 Motor drive
-#define MotorL_A_Pin 22 //马达驱动 Motor drive
-#define MotorL_B_Pin 19 //马达驱动 Motor drive
+#define MotorR_A_Pin 18 // Correct motor Pin
+#define MotorR_B_Pin 8 // Correct motor Pin
+#define MotorL_A_Pin 6 // Correct motor Pin
+#define MotorL_B_Pin 5 // Correct motor Pin
 
 // 摄像头
 #define PWDN_GPIO_NUM     -1

@@ -45,7 +45,7 @@ void motorInit(void)
     ledcAttachPin(MotorL_A_Pin, MotorL_A_Ch); 
     ledcSetup(MotorR_A_Ch,10000,8);
     ledcAttachPin(MotorR_A_Pin, MotorR_A_Ch); 
-    pinMode(MotorL_B_Pin, OUTPUT);
+    pinMode(MotorL_A_Pin, OUTPUT);
     pinMode(MotorR_B_Pin, OUTPUT);
 }
 // 电机设置 Motor settings
