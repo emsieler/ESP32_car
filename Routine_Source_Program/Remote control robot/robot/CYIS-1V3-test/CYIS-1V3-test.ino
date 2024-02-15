@@ -1,76 +1,163 @@
 
-#define MotorR_A_Pin 18 // Correct motor Pin
-#define MotorR_B_Pin 8 // Correct motor Pin
-#define MotorL_A_Pin 6 // Correct motor Pin
-#define MotorL_B_Pin 5 // Correct motor Pin
+#define MotorR_F 18 // Correct motor Pin
+#define MotorR_R 8 // Correct motor Pin
+#define MotorL_F 6 // Correct motor Pin
+#define MotorL_R 5 // Correct motor Pin
 
 
 void setup() {
   Serial.begin(115200); //set your serial monitor to this baud
-
   initMotors();
 
   delay(1000);
 
-  forward();
-  delay(4000);
-  stop();
+  accelerateForward(4000);
 
-  delay(1000);
-  turnLeft(350);
-  delay(1000);
+  delay(500);
+  turnLeft(90);
+  delay(500);
 
-  forward();
-  delay(4000);
-  stop();
+  accelerateForward(4000);
+
+}
+
+void accelerateForward(){
+  analogWrite(MotorL_R, 0);
+  analogWrite(MotorR_R, 0);
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorR_F,i);
+    analogWrite(MotorL_F,i);
+    delay(10);
+  }
+}
+
+void accelerateForward(int duration){
+  analogWrite(MotorL_R, 0);
+  analogWrite(MotorR_R, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorR_F,i);
+    analogWrite(MotorL_F,i);
+    delay(10);
+  }
+
+  delay(duration);
+
+  for (int  i = 255; i>=0; i=i-4){
+    analogWrite(MotorR_F,i);
+    analogWrite(MotorL_F,i);
+    delay(5);
+  }
+}
+void accelerateBackward(){
+  analogWrite(MotorL_F, 0);
+  analogWrite(MotorR_F, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorR_R,i);
+    analogWrite(MotorL_R,i);
+    delay(10);
+  }
+}
+
+void accelerateBackward(int duration){
+  analogWrite(MotorL_F, 0);
+  analogWrite(MotorR_F, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorR_R,i);
+    analogWrite(MotorL_R,i);
+    delay(10);
+  }
+
+  delay(duration);
+
+  for (int  i = 255; i>=0; i=i-4){
+    analogWrite(MotorR_R,i);
+    analogWrite(MotorL_R,i);
+    delay(5);
+  }
+}
+
+void turnLeft(int degrees){
+  int duration = int(degrees * 4.0);
+
+  analogWrite(MotorL_F, 0);
+  analogWrite(MotorR_R, 0);
+
+  analogWrite(MotorR_F,255);
+  analogWrite(MotorL_R,255);
+
+  delay(duration);
+  analogWrite(MotorR_F,0);
+  analogWrite(MotorL_R,0);
 
 }
 
 void rightMotorForward() {
-    digitalWrite(MotorR_A_Pin, HIGH);
-    digitalWrite(MotorR_B_Pin, LOW);
+  analogWrite(MotorR_R, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorR_R,i);
+    delay(8);
+  }
 }
-void rightMotorReverse() {
-    digitalWrite(MotorR_A_Pin, LOW);
-    digitalWrite(MotorR_B_Pin, HIGH);
-}
-void rightMotorStop() {
-    digitalWrite(MotorR_A_Pin, LOW);
-    digitalWrite(MotorR_B_Pin, LOW);
+void leftMotorForward() {
+  analogWrite(MotorL_R, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorL_F,i);
+    delay(8);
+  }
 }
 
-void leftMotorForward() {
-    digitalWrite(MotorL_A_Pin, HIGH);
-    digitalWrite(MotorL_B_Pin, LOW);
+void rightMotorReverse() {
+  analogWrite(MotorR_R, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorR_F,i);
+    delay(8);
+  }
 }
 void leftMotorReverse() {
-    digitalWrite(MotorL_A_Pin, LOW);
-    digitalWrite(MotorL_B_Pin, HIGH);
+  analogWrite(MotorL_F, 0);
+
+  for (int  i = 0; i<255; i=i+4){
+    analogWrite(MotorL_R,i);
+    delay(8);
+  }
 }
+
+void rightMotorStop() {
+    analogWrite(MotorR_F, 0);
+    analogWrite(MotorR_R, 0);
+}
+
+
 void leftMotorStop() {
-    digitalWrite(MotorL_A_Pin, LOW);
-    digitalWrite(MotorL_B_Pin, LOW);
+  analogWrite(MotorL_F, 0);
+  analogWrite(MotorL_R,0);
 }
 void initMotors(){
-    pinMode(MotorL_A_Pin, OUTPUT);
-    pinMode(MotorL_B_Pin, OUTPUT);
-    pinMode(MotorR_A_Pin, OUTPUT);
-    pinMode(MotorR_B_Pin, OUTPUT);
+    pinMode(MotorL_F, OUTPUT);
+    pinMode(MotorL_R, OUTPUT);
+    pinMode(MotorR_F, OUTPUT);
+    pinMode(MotorR_R, OUTPUT);
+}
 
-}
-void turnLeft(int del){
-  rightMotorForward();
-  leftMotorReverse();
-  delay(del);
-  rightMotorStop();
-  leftMotorStop();
-}
-void turnRight(int del){
-  leftMotorForward();
-  rightMotorReverse();
-  delay(del);
-  leftMotorStop();
-  rightMotorStop();
+void turnRight(int degrees){
+  int duration = int(degrees * 4.0);
+
+  analogWrite(MotorL_F, 0);
+  analogWrite(MotorR_R, 0);
+
+  analogWrite(MotorR_R,255);
+  analogWrite(MotorL_F,255);
+
+  delay(duration);
+
+  analogWrite(MotorR_R,0);
+  analogWrite(MotorL_F,0);
 }
 
 void forward(){
@@ -84,10 +171,13 @@ void reverse(){
 }
 
 void stop() {
+  analogWrite(MotorR_F, 0);
+  analogWrite(MotorL_R, 0);
   leftMotorStop();
   rightMotorStop();
 }
 
 void loop() {
+
 
 }
