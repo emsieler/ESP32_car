@@ -1,3 +1,5 @@
+#include <Arduino_BuiltIn.h>
+
 /*
 BILIBILI:技术宅物语
 */
@@ -19,6 +21,7 @@ void setup() {
   //外设初始化
   headlampInit();
   motorInit();
+  testMotors();
 
   //摄像头配置信息
   camera_config_t config;
@@ -55,11 +58,11 @@ void setup() {
   }
   sensor_t * s = esp_camera_sensor_get();
   //s->set_hmirror(s, 1); //垂直翻转
-  s->set_vflip(s, 1); //水平翻转
+  s->set_vflip(s, 1); //水平翻转 horizontal flip?
 
   // 连接WIFI
   headlampSet(100);
-  Serial.printf("SSID:%s  PASS:%s\r\n",WifiName,WifiPassword);
+ /* Serial.printf("SSID:%s  PASS:%s\r\n",WifiName,WifiPassword);
 
   int n1=0;
   WiFi.begin(WifiName, WifiPassword);
@@ -86,7 +89,25 @@ void setup() {
   camera_state = xSemaphoreCreateBinary();//二进制信号量
   sendJpg_state = xSemaphoreCreateBinary();//二进制信号量
   xTaskCreatePinnedToCore(Communication, "Communication", 4096, NULL, 1, NULL,  0);
+*/
+  testMotors();
   
+}
+
+void testMotors() {
+  Serial.println("Testing Motors...");
+
+  // Turn on motors for a short period of time
+  motorSet(MOTOR_L, 256); // Adjust the speed as necessary
+  motorSet(MOTOR_R, 256); // Adjust the speed as necessary
+  delay(1000);
+  Serial.println("Testing Motors.222222");
+
+  // Then turn off
+  motorSet(MOTOR_L, 0);
+  motorSet(MOTOR_R, 0);
+
+  Serial.println("Test complete.");
 }
 
 void loop() {

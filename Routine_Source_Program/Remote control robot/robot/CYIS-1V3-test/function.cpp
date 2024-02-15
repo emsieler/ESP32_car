@@ -38,7 +38,7 @@ void headlampSet(int bri)
     ledcWrite(Headlamp_Ch, bri); //输出PWM  
 }
 
-// 电机初始化
+// 电机初始化 Motor initialization
 void motorInit(void)
 {
     ledcSetup(MotorL_A_Ch,10000,8);
@@ -48,7 +48,7 @@ void motorInit(void)
     pinMode(MotorL_B_Pin, OUTPUT);
     pinMode(MotorR_B_Pin, OUTPUT);
 }
-// 电机设置
+// 电机设置 Motor settings
 void motorSet(uint8_t motor, int spe)
 {
     if(motor == MOTOR_L)
@@ -56,7 +56,7 @@ void motorSet(uint8_t motor, int spe)
         if(spe>=0)
         {
             digitalWrite(MotorL_B_Pin,HIGH);
-            ledcWrite(MotorL_A_Ch, 256-spe); //输出PWM  
+            ledcWrite(MotorL_A_Ch, 256-spe); //输出PWM  output pwm
         }
         else
         {
