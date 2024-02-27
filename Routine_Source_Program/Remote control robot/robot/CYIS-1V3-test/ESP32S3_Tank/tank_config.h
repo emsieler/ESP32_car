@@ -11,8 +11,8 @@
 #define LSCK_pin  7  
 
 
-const char* ssid = "SpectrumSetup-EE"; // Wifi Network name 
-const char* password = "majortablet147"; // Wifi password
+const char* ssid = "YOUR_NETWORK_NAME"; // Wifi Network name 
+const char* password = "YOUR_NETWORK_PASSWORD"; // Wifi password
 
-const char* host = "192.168.1.178"; // PC IP to communicate with
+const char* host = "xxx.x.x.x"; // PC IP to communicate with
 const uint16_t port = 12345; // Port that PC is listening to
