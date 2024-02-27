@@ -1,24 +1,41 @@
-#define Right_Motor_Forward 18 // Correct motor Pin
-#define Right_Motor_Reverse 8 // Correct motor Pin
-#define Left_Motor_Forward 6 // Correct motor Pin
-#define Left_Motor_Reverse 5 // Correct motor Pin
+#include "Arduino.h"
+#include <WiFi.h>
+#include "stdlib.h"
+#include "tank_config.h"
+
+void wifi_init(){
+  WiFi.begin(ssid, password);
+    
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(1000);
+      Serial.println("Connecting to WiFi...");
+    }
+    
+    Serial.println("Connected to WiFi");
 
 
-void setup() {
-  Serial.begin(115200); //set your serial monitor to this baud
-  initMotors();
+        // Check if connected to WiFi
+    if(WiFi.status() == WL_CONNECTED){
+      // Create a client
+      WiFiClient client;
 
-  delay(1000);
-
-  accelerateForward(4000);
-
-  delay(500);
-  turnLeft(90);
-  delay(500);
-
-  accelerateForward(4000);
-
+      if (!client.connect(host, port)) {
+        Serial.println("Connection to host failed");
+        delay(1000);
+        return;
+      }
+      
+      Serial.println("Connected to server");
+      // Send data
+      client.println("Hello from ESP32");
+      
+      // Close the connection
+      client.stop();
+    } else {
+      Serial.println("WiFi not connected");
+    }
 }
+
 
 void accelerateForward(){
   analogWrite(Left_Motor_Reverse, 0);
@@ -93,6 +110,21 @@ void turnLeft(int degrees){
 
 }
 
+void turnRight(int degrees){
+  int duration = int(degrees * 4.0);
+
+  analogWrite(Left_Motor_Forward, 0);
+  analogWrite(Right_Motor_Reverse, 0);
+
+  analogWrite(Right_Motor_Reverse,255);
+  analogWrite(Left_Motor_Forward,255);
+
+  delay(duration);
+
+  analogWrite(Right_Motor_Reverse,0);
+  analogWrite(Left_Motor_Forward,0);
+}
+
 void rightMotorForward() {
   analogWrite(Right_Motor_Reverse, 0);
 
@@ -144,20 +176,7 @@ void initMotors(){
     pinMode(Right_Motor_Reverse, OUTPUT);
 }
 
-void turnRight(int degrees){
-  int duration = int(degrees * 4.0);
 
-  analogWrite(Left_Motor_Forward, 0);
-  analogWrite(Right_Motor_Reverse, 0);
-
-  analogWrite(Right_Motor_Reverse,255);
-  analogWrite(Left_Motor_Forward,255);
-
-  delay(duration);
-
-  analogWrite(Right_Motor_Reverse,0);
-  analogWrite(Left_Motor_Forward,0);
-}
 
 void forward(){
   leftMotorForward();
@@ -174,9 +193,4 @@ void stop() {
   analogWrite(Left_Motor_Reverse, 0);
   leftMotorStop();
   rightMotorStop();
-}
-
-void loop() {
-
-
 }
